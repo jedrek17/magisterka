@@ -115,17 +115,21 @@ namespace magisterka
               Mat threshold_output = new Mat(grayCut.Size(), OpenCvSharp.MatType.CV_8UC1);
               Mat[] contours;
               Mat hierarchy = new Mat();
-              OpenCvSharp.Cv2.AdaptiveThreshold(grayOrg, grayThresh, 255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 17, 3);
-
+              //Cv2.Sobel(grayOrg.Clone(), grayThresh, MatType.CV_8UC1, 1, 1, 3, 1, 0, BorderTypes.Isolated);
+              //Cv2.Canny(grayOrg.Clone(), grayThresh, 150, 50);
+              //OpenCvSharp.Cv2.AdaptiveThreshold(grayThresh, grayThresh, 255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 17, 1);
+              OpenCvSharp.Cv2.Threshold(grayOrg, grayThresh, getThresh(), 255, OpenCvSharp.ThresholdTypes.Binary); // dla zdjec od kuby na ciemnym tle dziala przy progu 205
               //Cv2.BitwiseNot(grayThresh.Clone(), grayThresh);
 
-              //Mat kernel = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Ellipse, new OpenCvSharp.Size(2, 2));
-
+              Mat kernel = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Ellipse, new OpenCvSharp.Size(2, 2));
+              Mat kernel2 = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Ellipse, new OpenCvSharp.Size(2, 2));
               //Cv2.MorphologyEx(grayThresh.Clone(), grayThresh, OpenCvSharp.MorphTypes.Gradient, kernel);
               
               //Cv2.MorphologyEx(grayThresh.Clone(), grayThresh, OpenCvSharp.MorphTypes.Close, kernel);
               //Cv2.MorphologyEx(grayThresh.Clone(), grayThresh, OpenCvSharp.MorphTypes.Open, kernel);
-              //Cv2.Dilate(grayThresh.Clone(), grayThresh, kernel, null, 1);
+             // Cv2.MorphologyEx(grayThresh.Clone(), grayThresh, OpenCvSharp.MorphTypes.ERODE, kernel);
+             // Cv2.MorphologyEx(grayThresh.Clone(), grayThresh, OpenCvSharp.MorphTypes.Close, kernel);
+              //Cv2.Erode(grayThresh.Clone(), grayThresh, kernel, null, 1);
 
               //OpenCvSharp.Cv2.Threshold(grayOrg, grayThresh, getThresh(), 255, OpenCvSharp.ThresholdTypes.Binary);
               //Cv2.BitwiseNot(grayThresh.Clone(), grayThresh);
@@ -180,7 +184,7 @@ namespace magisterka
                         }
                     }  
                 }
-                //drawRect(m);
+                drawRect(m);
                 sw.WriteLine("w: " + m.Size.Width + "; h: " + m.Size.Height + "; s: " + stosunek);
             }
             sw.WriteLine("najlepszy: w;h:" + rect2draw.Size.Width + "; " + rect2draw.Size.Height);
@@ -222,12 +226,12 @@ namespace magisterka
                   //drawRect(rect2draw);
                   
                   digitImagesList[0] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(0, 0), new OpenCvSharp.Size(w, h))).Clone();
-                  digitImagesList[1] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w, 0), new OpenCvSharp.Size(w, h))).Clone();
-                  digitImagesList[2] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 2, 0), new OpenCvSharp.Size(w, h))).Clone();
-                  digitImagesList[3] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 3, 0), new OpenCvSharp.Size(w, h))).Clone();
-                  digitImagesList[4] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 4, 0), new OpenCvSharp.Size(w, h))).Clone();
+                 // digitImagesList[1] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w, 0), new OpenCvSharp.Size(w, h))).Clone();
+                //  digitImagesList[2] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 2, 0), new OpenCvSharp.Size(w, h))).Clone();
+                 // digitImagesList[3] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 3, 0), new OpenCvSharp.Size(w, h))).Clone();
+                //  digitImagesList[4] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 4, 0), new OpenCvSharp.Size(w, h))).Clone();
                   
-                  findDigitOnImg();
+                //  findDigitOnImg();
 
                   /*
                   Cv2.CvtColor(digitImagesList[0], digitImagesList[0], OpenCvSharp.ColorConversionCodes.BGR2GRAY);
@@ -257,16 +261,19 @@ namespace magisterka
                 Mat src = new Mat(m.Size(), OpenCvSharp.MatType.CV_8UC1);
 
                 Cv2.CvtColor(m.Clone(), src, OpenCvSharp.ColorConversionCodes.BGR2GRAY);
+                //Cv2.Sobel(src.Clone(), thresh, MatType.CV_8UC1, 2, 1, 3, 1, 1, BorderTypes.Default);
+                //Cv2.Canny(thresh.Clone(), thresh, 150, 150, 5);
 
-                //Cv2.AdaptiveThreshold(src.Clone(), thresh, 255, OpenCvSharp.AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 3, 11);
-                Cv2.Threshold(src.Clone(), thresh, 55, 255, OpenCvSharp.ThresholdTypes.Binary );
+               // Cv2.Sobel(src,thresh,MatType.CV_8UC1,1,1,3,1,)
+                Cv2.AdaptiveThreshold(src.Clone(), thresh, 255, OpenCvSharp.AdaptiveThresholdTypes.MeanC, ThresholdTypes.Binary, 3, 3);
+                //Cv2.Threshold(thresh.Clone(), thresh, 0, 255, OpenCvSharp.ThresholdTypes.Otsu | OpenCvSharp.ThresholdTypes.Binary);
                // kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (1, 5))
-                Mat kernel = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Cross, new OpenCvSharp.Size(2, 2));
-                Mat kernel2 = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Cross, new OpenCvSharp.Size(3, 3));
+                Mat kernel = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Cross, new OpenCvSharp.Size(1, 3));
+                //Mat kernel2 = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Cross, new OpenCvSharp.Size(3, 3));
                 //thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
                // Cv2.MorphologyEx(thresh.Clone(), thresh, OpenCvSharp.MorphTypes.Open, kernel);
-                Cv2.MorphologyEx(thresh.Clone(), thresh, OpenCvSharp.MorphTypes.ERODE, kernel);
-                //Cv2.MorphologyEx(thresh.Clone(), thresh, OpenCvSharp.MorphTypes.Close, kernel);
+                Cv2.MorphologyEx(thresh.Clone(), thresh, OpenCvSharp.MorphTypes.DILATE, kernel);
+                Cv2.MorphologyEx(thresh.Clone(), thresh, OpenCvSharp.MorphTypes.Close, kernel);
                 //Cv2.MorphologyEx(thresh.Clone(), thresh, OpenCvSharp.MorphTypes.Close, kernel2);
 
                 // Wyszukiwanie cyfr na wycietym fragmencie prostokata
@@ -274,17 +281,12 @@ namespace magisterka
                 Mat hierarchy = new Mat();
                 OpenCvSharp.Cv2.FindContours(thresh.Clone(), out contours, hierarchy, OpenCvSharp.RetrievalModes.List, OpenCvSharp.ContourApproximationModes.ApproxSimple);
                
-                //
-                
-                //for (int j = 0; j < contours.Length; j++)
-                //{
-                   // contours_poly[j] = Cv2.ApproxPolyDP(contours[j], 3, true);
-                    //approxPolyDP(Mat(contours[j]), contours_poly[j], 3, true);
-                   // boundRect[i] = boundingRect(Mat(contours_poly[j]));
-                //}
                 foreach (Mat mc in contours)
                 {
-                    Cv2.Rectangle(thresh, Cv2.BoundingRect(mc), new Scalar(0, 255, 0));
+                    //Cv2.Rectangle(thresh, Cv2.BoundingRect(mc), new Scalar(0, 255, 0));
+                    Mat tmp = new Mat();
+                    Cv2.ApproxPolyDP(mc,tmp, 1, false);
+                   // Cv2.Rectangle(thresh, Cv2.BoundingRect(tmp), new Scalar(0, 255, 0));
                 }
 
                 /*
