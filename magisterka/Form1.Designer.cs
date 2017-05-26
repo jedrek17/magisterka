@@ -33,6 +33,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxAfterTreshold = new System.Windows.Forms.PictureBox();
             this.pictureBoxGray = new System.Windows.Forms.PictureBox();
             this.pictureBoxThresh = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -83,6 +85,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOryginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTransform)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAfterTreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGray)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxThresh)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -148,6 +152,8 @@
             // 
             this.panel1.AutoScroll = true;
             this.panel1.AutoScrollMargin = new System.Drawing.Size(10, 10);
+            this.panel1.Controls.Add(this.pictureBox7);
+            this.panel1.Controls.Add(this.pictureBoxAfterTreshold);
             this.panel1.Controls.Add(this.pictureBoxGray);
             this.panel1.Controls.Add(this.pictureBoxThresh);
             this.panel1.Controls.Add(this.pictureBoxOryginal);
@@ -157,11 +163,27 @@
             this.panel1.Size = new System.Drawing.Size(717, 548);
             this.panel1.TabIndex = 4;
             // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Location = new System.Drawing.Point(11, 2450);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(680, 480);
+            this.pictureBox7.TabIndex = 5;
+            this.pictureBox7.TabStop = false;
+            // 
+            // pictureBoxAfterTreshold
+            // 
+            this.pictureBoxAfterTreshold.Location = new System.Drawing.Point(11, 1964);
+            this.pictureBoxAfterTreshold.Name = "pictureBoxAfterTreshold";
+            this.pictureBoxAfterTreshold.Size = new System.Drawing.Size(680, 480);
+            this.pictureBoxAfterTreshold.TabIndex = 4;
+            this.pictureBoxAfterTreshold.TabStop = false;
+            // 
             // pictureBoxGray
             // 
             this.pictureBoxGray.Location = new System.Drawing.Point(10, 1478);
             this.pictureBoxGray.Name = "pictureBoxGray";
-            this.pictureBoxGray.Size = new System.Drawing.Size(680, 393);
+            this.pictureBoxGray.Size = new System.Drawing.Size(680, 480);
             this.pictureBoxGray.TabIndex = 3;
             this.pictureBoxGray.TabStop = false;
             // 
@@ -748,6 +770,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOryginal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTransform)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAfterTreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGray)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxThresh)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -841,6 +865,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox textBoxTresholdDigit;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox pictureBoxAfterTreshold;
     }
 }
 
