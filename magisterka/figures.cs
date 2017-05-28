@@ -17,6 +17,7 @@ namespace magisterka
         Mat grayCut;
         Mat outputImg;
         Mat digitImage; // obrazek zawierajacy wyciety prostokat z licznikiem
+        Mat digitImageTh; // obrazek zawierajacy wyciety prostokat z licznikiem po sprogowaniu
         Mat[] digitImagesList = new Mat[5];
         List<int[,]> orgDigital; // tablica zawierajace wzory cyferek
         int[] result = new int[5];
@@ -206,22 +207,35 @@ namespace magisterka
 
                   float angle = rect2draw.Angle;
                   OpenCvSharp.Size2f rect_size = rect2draw.Size;
-                  if (rect2draw.Angle < -45.0) {
-                    angle += 90;
+                  if (rect_size.Width < rect_size.Height)
+                  {
+                      //angle = 90 + angle;
+                      angle = 90 + angle;
+                  }
+                  else
+                  {
+                      //angle = -1*angle;
+                      rect2draw.Size = new Size2f(rect_size.Height, rect_size.Width);
+                  }
+                 // if (rect2draw.Angle < -45.0) {
+                    //angle += 90;
                     // swap width and height
                     //rect2draw.Size = new Size2f(rect_size.Height, rect_size.Width);
-                  }
+                  //}
                   Mat rot_mat = OpenCvSharp.Cv2.GetRotationMatrix2D(rect2draw.Center, angle, 1.0);
                   digitImage = new Mat();
                   OpenCvSharp.Cv2.WarpAffine(src, digitImage, rot_mat, src.Size());
 
-                  //rect2draw.Angle = 90;
+                  OpenCvSharp.Cv2.WarpAffine(grayAfterTresh, grayAfterTresh, rot_mat, src.Size());
+                  rect2draw.Angle = 90; // obracamy prostokat, aby potem wyciac z takim samym kontem jak obrazek
+                  drawRect(grayAfterTresh, rect2draw);
+
+                  
 
                   digitImage = new Mat(digitImage, rect2draw.BoundingRect());
+
                   Cv2.CvtColor(digitImage, digitImage, OpenCvSharp.ColorConversionCodes.BGR2GRAY);
-                  OpenCvSharp.Cv2.Threshold(digitImage, digitImage, getThresh() - 70, 255, OpenCvSharp.ThresholdTypes.Binary);
-                  kernel = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Ellipse, new OpenCvSharp.Size(2, 2));
-                  Cv2.MorphologyEx(digitImage.Clone(), digitImage, OpenCvSharp.MorphTypes.ERODE, kernel);
+                  /*
                   //OpenCvSharp.Cv2.AdaptiveThreshold(digitImage, digitImage, 255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 17, 3);
                   double h ;//= (int)(rect2draw.Size.Width / 5);
                   double w ;//= (int)rect2draw.Size.Height;
@@ -236,15 +250,15 @@ namespace magisterka
                      w = (double)(rect2draw.Size.Height/5);
                   }
 
-                  //drawRect(rect2draw);
+                  
                   
                   digitImagesList[0] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(0, 0), new OpenCvSharp.Size(w, h))).Clone();
                   digitImagesList[1] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w, 0), new OpenCvSharp.Size(w, h))).Clone();
                   digitImagesList[2] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 2, 0), new OpenCvSharp.Size(w, h))).Clone();
                   digitImagesList[3] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 3, 0), new OpenCvSharp.Size(w, h))).Clone();
                   digitImagesList[4] = new Mat(digitImage, new Rect(new OpenCvSharp.Point(w * 4, 0), new OpenCvSharp.Size(w, h))).Clone();
-                  
-                  result = findDigitOnImg();
+                  */
+                  //result = findDigitOnImg();
                   
                   /*
                   Cv2.CvtColor(digitImagesList[0], digitImagesList[0], OpenCvSharp.ColorConversionCodes.BGR2GRAY);
@@ -263,15 +277,31 @@ namespace magisterka
            // gray = drawing; // tylko tymczasowo
               outputImg = src;
         }
-        private int[] findDigitOnImg(){
+        private int[] findDigitOnImg(int prog){
             double[] wyniki = new double[10];
             int[] wynikiOst = new int[digitImagesList.Length];
             int i = 0;
+            Mat digitTmp = new Mat();
+           // Cv2.CvtColor(digitImage, digitImage, OpenCvSharp.ColorConversionCodes.BGR2GRAY);
+            OpenCvSharp.Cv2.Threshold(digitImage.Clone(), digitTmp, prog, 255, OpenCvSharp.ThresholdTypes.Binary); // -70
+            Mat kernel = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Ellipse, new OpenCvSharp.Size(2, 2));
+            Cv2.MorphologyEx(digitTmp.Clone(), digitTmp, OpenCvSharp.MorphTypes.ERODE, kernel);
+            digitImageTh = digitTmp;
+            int w = digitTmp.Width / 5;
+            int h = digitTmp.Height;
+
+            digitImagesList[0] = new Mat(digitTmp, new Rect(new OpenCvSharp.Point(0, 0), new OpenCvSharp.Size(w, h))).Clone();
+            digitImagesList[1] = new Mat(digitTmp, new Rect(new OpenCvSharp.Point(w, 0), new OpenCvSharp.Size(w, h))).Clone();
+            digitImagesList[2] = new Mat(digitTmp, new Rect(new OpenCvSharp.Point(w * 2, 0), new OpenCvSharp.Size(w, h))).Clone();
+            digitImagesList[3] = new Mat(digitTmp, new Rect(new OpenCvSharp.Point(w * 3, 0), new OpenCvSharp.Size(w, h))).Clone();
+            digitImagesList[4] = new Mat(digitTmp, new Rect(new OpenCvSharp.Point(w * 4, 0), new OpenCvSharp.Size(w, h))).Clone();
 
             foreach (Mat m in digitImagesList)
             {
                 Mat[] contours;
                 Mat hierarchy = new Mat();
+
+                
 
                 OpenCvSharp.Cv2.FindContours(m.Clone(), out contours, hierarchy, OpenCvSharp.RetrievalModes.Tree, OpenCvSharp.ContourApproximationModes.ApproxSimple);
                 //OpenCvSharp.Cv2.MedianBlur(m.Clone(), m, 3);
@@ -292,7 +322,7 @@ namespace magisterka
                 Mat digit = new Mat(m, r2).Clone();
                 Cv2.Resize(digit, digit, new OpenCvSharp.Size(9, 18));
                 //OpenCvSharp.Cv2.MedianBlur(digit.Clone(), digit, 3);
-                Mat kernel = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Ellipse, new OpenCvSharp.Size(2, 2));
+                //Mat kernel = Cv2.GetStructuringElement(OpenCvSharp.MorphShapes.Ellipse, new OpenCvSharp.Size(2, 2));
                 //Cv2.MorphologyEx(digit.Clone(), digit, OpenCvSharp.MorphTypes.ERODE, kernel);
                 
                 digitImagesList[i] = digit;
@@ -482,6 +512,11 @@ namespace magisterka
         {
             return OpenCvSharp.Extensions.BitmapConverter.ToBitmap(digitImage);
         }
+        public Bitmap getDigitImageTh()
+        {
+            return OpenCvSharp.Extensions.BitmapConverter.ToBitmap(digitImageTh);
+        }
+
         public Bitmap getDigitsImg(int number, int treshold)
         {
             Mat toRet = digitImagesList[number].Clone();
@@ -493,8 +528,9 @@ namespace magisterka
            // readDigital(number);
             return OpenCvSharp.Extensions.BitmapConverter.ToBitmap(toRet);
         }
-        public string getResult()
+        public string getResult(int prog)
         {
+            result = findDigitOnImg(prog);
             string res = "";
             foreach (int r in result)
             {

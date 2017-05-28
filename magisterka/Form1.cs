@@ -72,7 +72,10 @@ namespace magisterka
             pictureBoxGray.Image = fig.getImgGrayOrg();
             pictureBoxThresh.Image = fig.getImgGrayThresh();
             pictureBoxAfterTreshold.Image = fig.getImgAfterThreshold();
-            labelResult.Text = fig.getResult();
+            pictureBoxDigit.Image = fig.getDigitImg();
+            textBoxTresholdDigit.Text = ((int)numericUpDownThreshRect.Value - 70).ToString();
+
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -85,12 +88,16 @@ namespace magisterka
         private void button4_Click(object sender, EventArgs e) // wydzielanie cyferek
         {
             int tresh = Convert.ToInt32(textBoxTresholdDigit.Text);
+            labelResult.Text = fig.getResult(tresh);
             pictureBoxDigit.Image = fig.getDigitImg();
+            pictureBoxDigitTh.Image = fig.getDigitImageTh();
             pictureBox1.Image = fig.getDigitsImg(0, tresh);
             pictureBox2.Image = fig.getDigitsImg(1, tresh);
             pictureBox3.Image = fig.getDigitsImg(2, tresh);
             pictureBox4.Image = fig.getDigitsImg(3, tresh);
             pictureBox5.Image = fig.getDigitsImg(4, tresh);
+
+            
         }
 
     }

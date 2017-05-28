@@ -73,6 +73,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.pictureBoxDigitTh = new System.Windows.Forms.PictureBox();
+            this.labelResult = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.textBoxTresholdDigit = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -82,8 +85,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxDigit = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.labelResult = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOryginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTransform)).BeginInit();
             this.panel1.SuspendLayout();
@@ -112,6 +113,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.windowNUM2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDigitTh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -160,7 +162,7 @@
             this.panel1.Controls.Add(this.pictureBoxThresh);
             this.panel1.Controls.Add(this.pictureBoxOryginal);
             this.panel1.Controls.Add(this.pictureBoxTransform);
-            this.panel1.Location = new System.Drawing.Point(12, 210);
+            this.panel1.Location = new System.Drawing.Point(12, 284);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(717, 548);
             this.panel1.TabIndex = 4;
@@ -215,7 +217,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 39);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(717, 165);
+            this.tabControl1.Size = new System.Drawing.Size(717, 239);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
@@ -227,15 +229,13 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(709, 139);
+            this.tabPage1.Size = new System.Drawing.Size(709, 213);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Rozpoznawanie kształtów(okregi)";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.labelResult);
-            this.groupBox4.Controls.Add(this.label15);
             this.groupBox4.Controls.Add(this.numericUpDownThreshRect);
             this.groupBox4.Controls.Add(this.label13);
             this.groupBox4.Controls.Add(this.numericUpDownMode);
@@ -555,7 +555,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(709, 139);
+            this.tabPage2.Size = new System.Drawing.Size(709, 213);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Szukanie elipsy";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -669,6 +669,10 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.BackColor = System.Drawing.Color.Gainsboro;
+            this.tabPage3.Controls.Add(this.pictureBoxDigitTh);
+            this.tabPage3.Controls.Add(this.labelResult);
+            this.tabPage3.Controls.Add(this.label16);
             this.tabPage3.Controls.Add(this.textBoxTresholdDigit);
             this.tabPage3.Controls.Add(this.label14);
             this.tabPage3.Controls.Add(this.pictureBox5);
@@ -681,10 +685,34 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(709, 139);
+            this.tabPage3.Size = new System.Drawing.Size(709, 213);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Wydzielanie cyferek";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // pictureBoxDigitTh
+            // 
+            this.pictureBoxDigitTh.Location = new System.Drawing.Point(6, 124);
+            this.pictureBoxDigitTh.Name = "pictureBoxDigitTh";
+            this.pictureBoxDigitTh.Size = new System.Drawing.Size(186, 83);
+            this.pictureBoxDigitTh.TabIndex = 14;
+            this.pictureBoxDigitTh.TabStop = false;
+            // 
+            // labelResult
+            // 
+            this.labelResult.AutoSize = true;
+            this.labelResult.Location = new System.Drawing.Point(370, 194);
+            this.labelResult.Name = "labelResult";
+            this.labelResult.Size = new System.Drawing.Size(0, 13);
+            this.labelResult.TabIndex = 13;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(198, 194);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(101, 13);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "Odczytana wartość:";
             // 
             // textBoxTresholdDigit
             // 
@@ -761,23 +789,6 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(6, 105);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(101, 13);
-            this.label15.TabIndex = 9;
-            this.label15.Text = "Odczytana wartość:";
-            // 
-            // labelResult
-            // 
-            this.labelResult.AutoSize = true;
-            this.labelResult.Location = new System.Drawing.Point(114, 104);
-            this.labelResult.Name = "labelResult";
-            this.labelResult.Size = new System.Drawing.Size(0, 13);
-            this.labelResult.TabIndex = 10;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -822,6 +833,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDigitTh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -889,7 +901,8 @@
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBoxAfterTreshold;
         private System.Windows.Forms.Label labelResult;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.PictureBox pictureBoxDigitTh;
     }
 }
 
