@@ -72,6 +72,7 @@ namespace magisterka
             pictureBoxGray.Image = fig.getImgGrayOrg();
             pictureBoxThresh.Image = fig.getImgGrayThresh();
             pictureBoxAfterTreshold.Image = fig.getImgAfterThreshold();
+            labelResult.Text = fig.getResult();
         }
 
         private void button3_Click(object sender, EventArgs e)

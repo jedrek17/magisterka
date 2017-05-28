@@ -82,6 +82,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxDigit = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.labelResult = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOryginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTransform)).BeginInit();
             this.panel1.SuspendLayout();
@@ -232,6 +234,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.labelResult);
+            this.groupBox4.Controls.Add(this.label15);
             this.groupBox4.Controls.Add(this.numericUpDownThreshRect);
             this.groupBox4.Controls.Add(this.label13);
             this.groupBox4.Controls.Add(this.numericUpDownMode);
@@ -757,6 +761,23 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 105);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(101, 13);
+            this.label15.TabIndex = 9;
+            this.label15.Text = "Odczytana wartość:";
+            // 
+            // labelResult
+            // 
+            this.labelResult.AutoSize = true;
+            this.labelResult.Location = new System.Drawing.Point(114, 104);
+            this.labelResult.Name = "labelResult";
+            this.labelResult.Size = new System.Drawing.Size(0, 13);
+            this.labelResult.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -867,6 +888,8 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBoxAfterTreshold;
+        private System.Windows.Forms.Label labelResult;
+        private System.Windows.Forms.Label label15;
     }
 }
 
